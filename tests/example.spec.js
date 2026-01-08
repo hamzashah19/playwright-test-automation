@@ -13,8 +13,7 @@ test('has title', async ({ page }) => {
    console.log (await page.locator(':text-is("Invalid credentials")').textContent());
    await expect(page.locator(':text-is("Invalid credentials")')).toContainText('Test');
    
-   
- // await expect(page).toHaveTitle(/Anybill AP - Login/);
+   await expect(page).toHaveTitle(/Anybill AP - Login/);
 });
 
 
