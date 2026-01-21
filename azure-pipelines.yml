@@ -1,8 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - main
 
@@ -10,10 +5,49 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+# Step 1: Setup Node.js
+- task: NodeTool@0
+  inputs:
+    versionSpec: '18.x'
+  displayName: 'Install Node.js'
 
+# Step 2: Install dependencies
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    npm install
+  displayName: 'Install npm dependencies'
+
+# Step 3: Install Playwright browsers
+- script: |
+    npx playwright install --with-deps
+  displayName: 'Install Playwright browsers'
+
+# Step 4: Run Playwright tests
+- script: |
+    npm test
+  displayName: 'Run Playwright tests'
+  continueOnError: true
+
+# Step 5: Publish test results (optional - if using test reporters)
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '**/test-results/junit.xml'
+    failTaskOnFailedTests: true
+  displayName: 'Publish test results'
+  condition: always()
+
+# Step 6: Publish screenshots/artifacts
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: 'screenshots'
+    ArtifactName: 'test-screenshots'
+  displayName: 'Upload screenshots'
+  condition: always()
+
+# Step 7: Publish HTML report (optional)
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: 'playwright-report'
+    ArtifactName: 'playwright-report'
+  displayName: 'Upload HTML report'
+  condition: always()
