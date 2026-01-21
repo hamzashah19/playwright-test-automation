@@ -1,10 +1,11 @@
 const { test, expect } = require('@playwright/test');
 const { LoginPage } = require('../pages/login.page');
 const { loginData } = require('../utils/testData');
+const { only } = require('node:test');
 
 test.describe('Login Feature', () => {
 
-  test('User should login successfully with valid credentials', async ({ page }) => {
+  test ('User should login successfully with valid credentials', async ({ page }) => {
     const loginPage = new LoginPage(page);
 
     await loginPage.navigate();
