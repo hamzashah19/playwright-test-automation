@@ -1,18 +1,27 @@
 {
-  "name": "playwright_automation",
-  "version": "1.0.0",
-  "description": "",
+  "name": "playwright-ddt-framework",
+  "version": "2.0.0",
+  "description": "Playwright Data-Driven Testing Framework with POM",
   "main": "index.js",
-  "scripts": {},
-  "keywords": [],
+  "scripts": {
+    "test": "node tests/login.spec.js",
+    "test:excel": "node tests/ddt-login.spec.js",
+    "generate:testdata": "node scripts/generateTestData.js",
+    "test:valid": "node tests/login.spec.js valid",
+    "test:invalid": "node tests/login.spec.js invalid",
+    "test:admin": "node tests/login.spec.js admin"
+  },
+  "keywords": [
+    "playwright",
+    "automation",
+    "testing",
+    "ddt",
+    "data-driven"
+  ],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
-  "devDependencies": {
-    "@playwright/test": "^1.57.0",
-    "@types/node": "^25.0.1"
-  },
   "dependencies": {
-    "dotenv": "^17.2.3"
+    "playwright": "^1.40.0",
+    "xlsx": "^0.18.5"
   }
 }
