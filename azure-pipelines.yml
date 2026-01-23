@@ -24,7 +24,7 @@ steps:
 # Step 4: Run Playwright tests
 - script: |
     npm test:excel
-  displayName: 'Run tests'
+  displayName: 'npm run test:excel'
   continueOnError: true
 
 # Step 5: Publish test results (optional - if using test reporters)
