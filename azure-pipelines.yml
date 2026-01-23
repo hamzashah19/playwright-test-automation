@@ -21,33 +21,22 @@ steps:
     npx playwright install --with-deps
   displayName: 'Install Playwright browsers'
 
-# Step 4: Run Playwright tests
+# Step 4: Generate test data
 - script: |
-    npm test
-  displayName: 'Run Playwright tests'
-  continueOnError: true
+    npm run generate:testdata
+  displayName: 'Generate test data from Excel'
+  continueOnError: false
 
-# Step 5: Publish test results (optional - if using test reporters)
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '**/test-results/junit.xml'
-    failTaskOnFailedTests: true
-  displayName: 'Publish test results'
-  condition: always()
+# Step 5: Run Playwright tests
+- script: |
+    npm run test:excel
+  displayName: 'Run data-driven tests'
+  continueOnError: true
 
 # Step 6: Publish screenshots/artifacts
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: 'screenshots'
     ArtifactName: 'test-screenshots'
-  displayName: 'Upload screenshots'
-  condition: always()
-
-# Step 7: Publish HTML report (optional)
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: 'playwright-report'
-    ArtifactName: 'playwright-report'
-  displayName: 'Upload HTML report'
+  displayName: 'Upload test screenshots'
   condition: always()
